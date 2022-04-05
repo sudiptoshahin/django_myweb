@@ -11,12 +11,16 @@ def home(request):
     site = Main.objects.get(pk=1)
     newses = News.objects.all()
 
-    return render(request, 'main/home.html', {'site': site, 'newses': newses})
+    return render(request, 'front/home.html', {'site': site, 'newses': newses})
 
 
 def about(request):
 
     site = Main.objects.get(pk=1)
 
-    return render(request, 'main/about.html', {'site': site})
+    return render(request, 'front/about.html', {'site': site})
 
+
+def panel(request):
+
+    return render(request, 'back/home.html')
