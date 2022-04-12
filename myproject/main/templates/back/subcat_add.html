@@ -7,36 +7,23 @@
 <div class="content-header">
     <div class="header-section">
         <h1>
-            <i class="fa fa-table"></i>Add News<br><small>You can add, edit and delete your news data!</small>
+            <i class="fa fa-table"></i>Add SubCategory<br><small>You can add, edit and delete your news data!</small>
         </h1>
     </div>
     <ul class="breadcrumb breadcrumb-top">
-        <li>News</li>
-        <li><a href="{% url 'news_add' %}">Add</a></li>
+        <li>SubCategories</li>
+        <li><a href="{% url 'subcat_add' %}">Add</a></li>
     </ul>
 </div>
 
 <!-- Datatables Content -->
 <div class="block full">
     <div class="block-title">
-        <h2><strong>News</strong> Add</h2>
+        <h2><strong>SubCategories</strong> Add</h2>
     </div>
 
 
     <div class="table-responsive">
-
-        <div class="content-header">
-            <div class="header-section">
-                <h1>
-                    <i class="gi gi-notes_2"></i>Form General Elements<br><small>Clean and professional forms for your UI!</small>
-                </h1>
-            </div>
-        </div>
-        <ul class="breadcrumb breadcrumb-top">
-            <li>Forms</li>
-            <li><a href="">General</a></li>
-        </ul>
-        <!-- END Forms General Header -->
 
         <div class="row">
             <div class="col-md-12">
@@ -45,27 +32,28 @@
                     <!-- Basic Form Elements Title -->
                     <div class="block-title">
 
-                        <h2><strong>Add</strong> News</h2>
+                        <h2><strong>Add</strong> SubCategory</h2>
                     </div>
                     <!-- END Form Elements Title -->
 
                     <!-- Basic Form Elements Content -->
-                    <form action="{% url 'news_add' %}" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                    <form action="{% url 'subcat_add' %}" method="post" class="form-horizontal form-bordered">
                         {% csrf_token %}
                         <div class="form-group">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="newstitle" name="newstitle" placeholder="News Title">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="SubCategory Title">
                                 </div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <select class="form-select select-chosen" id="newscat" name="newscat" aria-label="Default select example" name="example-chosen" style="width: 100%;">  
+                                    <select class="form-select select-chosen" id="cat" name="cat" aria-label="Default select example" name="example-chosen" style="width: 100%;">  
                                         <option selected>Choose a Category..</option>
                                         {% for cat in cats %}
-                                            <option value="{{ cat.pk }}"> {{ cat.catname }} | {{ cat.name }}</option>
+                                            <option value="{{ cat.pk }}">{{ cat }}</option>
                                         {% endfor %}
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -73,27 +61,9 @@
 
                         <div class="form-group">
                             <div class="col-md-12">
-                                <textarea type="text" id="newstxtshort" name="newstxtshort" rows="5" class="form-control" placeholder="Short text"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <textarea type="text" rows="5" id="newstxt" name="newstxt" class="form-control" placeholder="Body text"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <input type="file" class="form-control" id="myfile" name="myfile" placeholder="News Title">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
                             </div>
                         </div>
-                        
-
 
                     </form>
                     <!-- END Basic Form Elements Content -->

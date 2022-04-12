@@ -384,7 +384,22 @@
                                         </li>
 
                                         <li>
-                                            <a href="#">Manage</a>
+                                            <a href="{% url 'cat_list' %}">Category List</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- news category ends here -->
+
+                                <!-- news subcategory starts here -->
+                                <li>
+                                    <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Subcategory</span></a>
+                                    <ul>
+                                        <li>
+                                            <a href="{% url 'subcat_add' %}">Add Subcategory</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{% url 'subcat_list' %}">Subcategory List</a>
                                         </li>
                                     </ul>
                                 </li>
