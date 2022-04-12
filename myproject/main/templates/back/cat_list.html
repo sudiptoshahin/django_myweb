@@ -7,11 +7,11 @@
 <div class="content-header">
     <div class="header-section">
         <h1>
-            <i class="fa fa-table"></i>News List<br><small>You can add, edit and delete your news data!</small>
+            <i class="fa fa-table"></i>Category List<br><small>You can add, edit and delete your news data!</small>
         </h1>
     </div>
     <ul class="breadcrumb breadcrumb-top">
-        <li>News</li>
+        <li>Category</li>
         <li><a href="{% url 'news_list' %}">Lists</a></li>
     </ul>
 </div>
@@ -19,7 +19,7 @@
 <!-- Datatables Content -->
 <div class="block full">
     <div class="block-title">
-        <h2><strong>News</strong> list</h2>
+        <h2><strong>Category</strong> list</h2>
     </div>
 
     <div class="table-responsive">
@@ -27,30 +27,20 @@
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
-                    <th class="text-center">Image</th>
-                    <th class="text-center">Title</th>
-                    <th>Date & Time</th>
-                    <th>Category</th>
-                    <th>Writter</th>
-                    <th>Views</th>
-                    <th class="text-center">Actions</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
 
-                {% for news in newslist %}
+                {% for news in cats %}
                     <tr>
                         <td class="text-center">{{ news.pk }}</td>
-                        <td class="text-center"><img src="{{ news.picurl }}" style="display: inline-block;width: 50px; height: 50px;" alt="avatar" class="img-circle"></td>
                         <td>{{ news.name }}</td>
-                        <td>{{ news.date }} | {{ news.time }}</td>
-                        <td>{{ news.catname }}</td>
-                        <td>{{ news.writer }}</td>
-                        <td>-</td>
                         <td class="text-center">
                             <div class="btn-group">
-                                <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
-                                <a href="{% url 'news_delete' pk=news.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times">Delete</i></a>
+                                <a href="#" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
+                                <a href="#" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times">Delete</i></a>
                             </div>
                         </td>
                     </tr>

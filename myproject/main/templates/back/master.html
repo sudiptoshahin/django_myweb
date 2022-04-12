@@ -34,7 +34,7 @@
         <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 
         <!-- Related styles of various icon packs and plugins -->
-        <link rel="stylesheet" href="{% static 'back/css/plugins.css' %">
+        <link rel="stylesheet" href="{% static 'back/css/plugins.css' %}">
 
         <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
         <link rel="stylesheet" href="{% static 'back/css/main.css' %}">
@@ -375,7 +375,21 @@
                                     <span class="sidebar-header-title">Site settings</span>
                                 </li>
 
-                                <!-- page layout -->
+                                <!-- news category starts here -->
+                                <li>
+                                    <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Category</span></a>
+                                    <ul>
+                                        <li>
+                                            <a href="{% url 'cat_add' %}">Add New</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">Manage</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- news category ends here -->
+
                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">News</span></a>
                                     <ul>

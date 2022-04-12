@@ -9,7 +9,12 @@ urlpatterns = [
 
     # main
     url(r'', include('main.urls')),
+    # news
     url(r'', include('news.urls')),
+    # category
+    url(r'', include('cat.urls')),
+    # subcategory
+    url(r'', include('subcat.urls')),
 ]
 
 if settings.DEBUG:

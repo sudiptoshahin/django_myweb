@@ -1,0 +1,76 @@
+
+{% extends 'back/master.html' %}
+{% load staticfiles %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Add Category<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Categories</li>
+        <li><a href="{% url 'cat_add' %}">Add</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2><strong>Categories</strong> Add</h2>
+    </div>
+
+
+    <div class="table-responsive">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Basic Form Elements Block -->
+                <div class="block">
+                    <!-- Basic Form Elements Title -->
+                    <div class="block-title">
+
+                        <h2><strong>Add</strong> Category</h2>
+                    </div>
+                    <!-- END Form Elements Title -->
+
+                    <!-- Basic Form Elements Content -->
+                    <form action="{% url 'cat_add' %}" method="post" class="form-horizontal form-bordered">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Category Title">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <!-- END Basic Form Elements Content -->
+                </div>
+                <!-- END Basic Form Elements Block -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script src="{% static 'back/js/helpers/ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
