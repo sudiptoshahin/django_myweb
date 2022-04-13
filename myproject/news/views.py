@@ -114,3 +114,82 @@ def news_del(request, pk):
 
 
     return redirect('news_list')
+
+
+def news_edit(request, pk):
+
+    # study the page not found error
+    if len(News.objects.filter(pk=pk)) == 0:
+        error = 'News not found!'
+        return redirect(request, 'back/error.html', {'error': error})
+
+    news = News.objects.get(pk=pk)
+    cats = SubCat.objects.all()
+
+    if request.method == 'POST':
+        newstitle = request.POST.get('newstitle')
+        newstxtshort = request.POST.get('newstxtshort')
+        newstxt = request.POST.get('newstxt')
+        newscatid = request.POST.get('newscat')
+
+        try:
+            # save the file
+            myfile = request.FILES['myfile']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            url = fs.url(filename)
+
+            if str(myfile.content_type).startswith('image'):
+                if myfile.size < 500000:
+
+                    newscatname = SubCat.objects.get(pk=newscatid).name
+                    ## add data to the database
+                    
+                    b = News.objects.get(pk=pk)
+
+                    fss = FileSystemStorage()
+                    fss.delete(b.picname)
+
+                    b.name = newstitle
+                    b.short_txt = newstxtshort
+                    b.body_txt = newstxt
+                    b.picname = filename
+                    b.picurl = url
+                    b.catname = newscatname
+                    b.catid = newscatid
+
+                    b.save()
+
+                    return redirect('news_list')
+                else:
+
+                    fs = FileSystemStorage()
+                    fs.delete(filename)
+                    
+                    error = 'You uploaded file size is bigger than 5MB'
+                    return render(request, 'back/error.html', {'error': error})
+            else:
+
+                fs = FileSystemStorage()
+                fs.delete(filename)
+
+                error = "Your uploaded file is not supported!"
+                return render(request, 'back/error.html', {'error': error})
+            
+        except:
+            newscatname = SubCat.objects.get(pk=newscatid).name
+            ## add data to the database
+                    
+            b = News.objects.get(pk=pk)
+
+            b.name = newstitle
+            b.short_txt = newstxtshort
+            b.body_txt = newstxt
+            b.catname = newscatname
+            b.catid = newscatid
+
+            b.save()
+
+            return redirect('news_list')
+
+    return render(request, 'back/news_edit.html', {'pk': pk, 'news': news, 'cats': cats})

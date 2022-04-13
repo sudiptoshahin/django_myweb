@@ -1,5 +1,5 @@
 
-{% load staticfiles %}
+{% load static %}
 
 <!DOCTYPE html>
 <!--[if IE 9]>         <html class="no-js lt-ie10" lang="en"> <![endif]-->
@@ -47,6 +47,8 @@
 
         <!-- Modernizr (browser feature detection library) -->
         <script src="{% static 'back/js/vendor/modernizr.min.js' %}"></script>
+        {% block scriptblock %}
+        {% endblock %}
     </head>
     <body>
         <!-- Page Wrapper -->

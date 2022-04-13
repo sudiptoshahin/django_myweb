@@ -1,20 +1,21 @@
-from django.conf.urls import url, include
+# from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    url(r'^admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 
     # main
-    url(r'', include('main.urls')),
+    path('', include('main.urls')),
     # news
-    url(r'', include('news.urls')),
+    path('', include('news.urls')),
     # category
-    url(r'', include('cat.urls')),
+    path('', include('cat.urls')),
     # subcategory
-    url(r'', include('subcat.urls')),
+    path('', include('subcat.urls')),
 ]
 
 if settings.DEBUG:

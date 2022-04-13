@@ -1,13 +1,14 @@
-from django.conf.urls import url
+# from django.conf.urls import url
+from django.urls import path
 from main import views
 
 
 urlpatterns = [
 
-    url(r'^$', views.home, name='home'),
+    path('', views.home, name='home'),
     # url(r'^home/$', views.home, name='home'),
-    url(r'^about/$', views.about, name='about'),
+    path('about/', views.about, name='about'),
 
     # back-end url
-    url(r'^panel/$', views.panel, name='panel'),
+    path('panel/', views.panel, name='panel'),
 ]

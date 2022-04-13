@@ -1,6 +1,10 @@
 
 {% extends 'back/master.html' %}
-{% load staticfiles %}
+{% load static %}
+
+{% block scriptblock %}
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
 
 {% block mainblock %}
 <!-- Datatables Header -->
@@ -80,8 +84,12 @@
                         <div class="form-group">
                             <div class="col-md-12">
                                 <textarea type="text" rows="5" id="newstxt" name="newstxt" class="form-control" placeholder="Body text"></textarea>
+                                <script>
+                                    CKEDITOR.replace(' newstxt ');
+                                </script>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-md-12">
                                 <input type="file" class="form-control" id="myfile" name="myfile" placeholder="News Title">
@@ -114,5 +122,9 @@
 {% block footerblock %}
     <!-- Load and execute javascript code used only in this page -->
     <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
-    <script src="{% static 'back/js/helpers/ckeditor/ckeditor.js' %}"></script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    
 {% endblock %}
