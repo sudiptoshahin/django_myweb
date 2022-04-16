@@ -4,6 +4,7 @@ from main.models import Main
 from django.core.files.storage import FileSystemStorage
 import datetime
 from subcat.models import SubCat
+from cat.models import Cat
 
 # Create your views here.
 
@@ -65,10 +66,22 @@ def news_add(request):
             if str(myfile.content_type).startswith('image'):
                 if myfile.size < 500000:
 
-                    newscatname = SubCat.objects.get(pk=newscatid)
+                    newscatname = SubCat.objects.get(pk=newscatid).name
+
+                    ocatid = SubCat.objects.get(pk=newscatid).catid
                     ## add data to the database
-                    data = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt, date=today, time=time, picname=filename, picurl=url, writer='-', catname=newscatname.name, catid=newscatid, show=0)
+                    data = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt,
+                                date=today, time=time, picname=filename, picurl=url, writer='-',
+                                catname=newscatname, catid=newscatid, ocatid=ocatid, show=0)
                     data.save()
+
+                    # get the subcat. origin id/pk
+                    count = len(News.objects.filter(ocatid=ocatid))
+
+                    b = Cat.objects.get(pk=ocatid)
+                    b.count = count
+                    b.save()
+
                     return redirect('news_list')
                 else:
 
@@ -99,15 +112,23 @@ def news_del(request, pk):
     will shows error if it get a pk which is not exists. '''
     ''' We need also delete the image of the news so we need
     to use get() instead of filter() '''
+    
     try:
-
         news = News.objects.get(pk=pk)
 
         # delete the news image associated with it
         fs = FileSystemStorage()
         fs.delete(news.picname)
 
+        ocatid = News.objects.get(pk=pk).ocatid
+
         news.delete()
+
+        count = len(News.objects.filter(ocatid=ocatid))
+        b = Cat.objects.get(pk=ocatid)
+        b.count = count
+        b.save()
+
     except:
         error = "Something is error."
         return render(request, 'back/error.html', {'error': error})
