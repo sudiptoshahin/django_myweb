@@ -74,7 +74,11 @@
 							</div>
 
 							<p class="f1-s-11 cl6 p-b-25">
-								{{ news.body_txt }}
+								{{ news.short_txt|safe }}
+							</p>
+
+							<p class="f1-s-11 cl6 p-b-25">
+								{{ news.body_txt|safe }}
 							</p>
 
 							<!-- Tag -->

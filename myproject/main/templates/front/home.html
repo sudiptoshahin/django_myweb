@@ -235,8 +235,9 @@
                                     {{ news.name }} 
                                 </a>
                             </h5>
-
-                            <p>{{ news.short_txt }}</p>
+                            
+                            <!-- safe text -> not to showing the html tags from the CKEditor -->
+                            <p>{{ news.short_txt|safe }}</p>
 
                             <span class="cl8">
                                 <a href="#" class="f1-s-4 cl8 hov-cl10 trans-03">
