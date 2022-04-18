@@ -11,4 +11,13 @@ urlpatterns = [
 
     # back-end url
     path('panel/', views.panel, name='panel'),
+
+    #login
+    path('login/', views.my_login, name='login'),
+
+    # logout
+    path('logout/', views.my_logout, name='logout'),
+
+    # site settings
+    path('panel/setting/', views.site_setting, name='site_setting'),
 ]

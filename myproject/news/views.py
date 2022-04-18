@@ -18,12 +18,22 @@ def news_detail(request, word):
 
 def news_list(request):
 
+    # login check
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
+
     newslist = News.objects.all()
 
     return render(request, 'back/news_list.html', {'newslist': newslist})
 
 
 def news_add(request):
+
+    # login check
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
 
     now = datetime.datetime.now()
     year = now.year
@@ -107,6 +117,11 @@ def news_add(request):
 
 def news_del(request, pk):
 
+    # login check
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
+
     # get the news
     ''' We can also use the get() method insted of filter() but get() method 
     will shows error if it get a pk which is not exists. '''
@@ -138,6 +153,11 @@ def news_del(request, pk):
 
 
 def news_edit(request, pk):
+
+    #login check
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
 
     # study the page not found error
     if len(News.objects.filter(pk=pk)) == 0:

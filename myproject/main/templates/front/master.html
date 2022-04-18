@@ -115,7 +115,7 @@
 			<div class="wrap-logo no-banner container">
 				<!-- Logo desktop -->		
 				<div class="logo">
-					<a href="{% url 'home' %}"><img src="{% static 'front/images/icons/logo-01.png' %}" alt="LOGO"></a>
+					<a href="{% url 'home' %}"><img src="{{ site.picurl }}" alt="LOGO"></a>
 				</div>
 			</div>	
 			
@@ -261,8 +261,8 @@
 				<div class="row">
 					<div class="col-lg-4 p-b-20">
 						<div class="size-h-3 flex-s-c">
-							<a href="index.html">
-								<img class="max-s-full" src="{% static 'front/images/icons/logo-02.png' %}" alt="LOGO">
+							<a href="{% url 'home' %}">
+								<img class="max-s-full" src="{{ site.picurl2 }}" alt="LOGO">
 							</a>
 						</div>
 
