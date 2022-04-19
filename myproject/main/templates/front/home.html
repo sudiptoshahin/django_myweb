@@ -86,62 +86,40 @@
 
                                     <div class="col-sm-6 p-r-25 p-r-15-sr991">
                                         <!-- Item post -->	
-                                        <div class="flex-wr-sb-s m-b-30">
-                                            <a href="blog-detail-02.html" class="size-w-1 wrap-pic-w hov1 trans-03">
-                                                <img src="{% static 'front/images/post-03.jpg' %}" alt="IMG">
-                                            </a>
+                                        {% for popnews in popnewses %}
+                                            {% if popnews.ocatid == newscat.pk %}
+                                                {% if popnews.count != 0 %}
+                                                    <div class="flex-wr-sb-s m-b-30">
+                                                        <a href="{% url 'news_detail' word=popnews.name %}" class="size-w-1 wrap-pic-w hov1 trans-03">
+                                                            <img src="{{ popnews.picurl }}" alt="IMG">
+                                                        </a>
 
-                                            <div class="size-w-2">
-                                                <h5 class="p-b-5">
-                                                    <a href="blog-detail-02.html" class="f1-s-5 cl3 hov-cl10 trans-03">
-                                                        Donec metus orci, malesuada et lectus vitae
-                                                    </a>
-                                                </h5>
+                                                        <div class="size-w-2">
+                                                            <h5 class="p-b-5">
+                                                                <a href="{% url 'news_detail' word=popnews.name %}" class="f1-s-5 cl3 hov-cl10 trans-03">
+                                                                    {{ popnews.name }}
+                                                                </a>
+                                                            </h5>
 
-                                                <span class="cl8">
-                                                    <a href="#" class="f1-s-6 cl8 hov-cl10 trans-03">
-                                                        Beachs
-                                                    </a>
+                                                            <span class="cl8">
+                                                                <a href="#" class="f1-s-6 cl8 hov-cl10 trans-03">
+                                                                    {{ popnews.catname }}
+                                                                </a>
 
-                                                    <span class="f1-s-3 m-rl-3">
-                                                        -
-                                                    </span>
+                                                                <span class="f1-s-3 m-rl-3">
+                                                                    -
+                                                                </span>
 
-                                                    <span class="f1-s-3">
-                                                        Feb 17
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
+                                                                <span class="f1-s-3">
+                                                                    {{ popnews.date }}
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
 
-                                        <!-- Item post -->
-                                        <div class="flex-wr-sb-s m-b-30">
-                                            <a href="blog-detail-02.html" class="size-w-1 wrap-pic-w hov1 trans-03">
-                                                <img src="{% static 'front/images/post-27.jpg' %}" alt="IMG">
-                                            </a>
-
-                                            <div class="size-w-2">
-                                                <h5 class="p-b-5">
-                                                    <a href="blog-detail-02.html" class="f1-s-5 cl3 hov-cl10 trans-03">
-                                                        Donec metus orci, malesuada et lectus vitae
-                                                    </a>
-                                                </h5>
-
-                                                <span class="cl8">
-                                                    <a href="#" class="f1-s-6 cl8 hov-cl10 trans-03">
-                                                        Flight
-                                                    </a>
-
-                                                    <span class="f1-s-3 m-rl-3">
-                                                        -
-                                                    </span>
-
-                                                    <span class="f1-s-3">
-                                                        Feb 16
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

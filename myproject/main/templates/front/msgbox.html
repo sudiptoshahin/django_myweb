@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block headblock %}
-    <title>{{ site.name }} | About</title>
+    <title>{{ site.name }} | Messages</title>
 {% endblock %}
 
 {% block mainblock %}
@@ -16,7 +16,7 @@
 				</a>
 
 				<span class="breadcrumb-item f1-s-3 cl9">
-					About Us
+					Message
 				</span>
 			</div>
 
@@ -32,7 +32,7 @@
 	<!-- Page heading -->
 	<div class="container p-t-4 p-b-35">
 		<h2 class="f1-l-1 cl2">
-			About Us
+			Message
 		</h2>
 	</div>
 
@@ -43,8 +43,10 @@
 				<div class="col-md-7 col-lg-8 p-b-30">
 					<div class="p-r-10 p-r-0-sr991">
 						<p class="f1-s-11 cl6 p-b-25">
-							{{ site.abouttxt|safe }}
+							{{ msg }}
 						</p>
+
+                        <a href="{% url 'home' %}" class="btn btn-primary">Back to site</a>
 					</div>
 				</div>
 				

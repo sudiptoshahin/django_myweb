@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'cat.apps.CatConfig',
     'subcat.apps.SubcatConfig',
+    'contactform.apps.ContactformConfig'
 ]
 
 MIDDLEWARE = [

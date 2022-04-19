@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.test import tag
 from .models import News
 from main.models import Main
 from django.core.files.storage import FileSystemStorage
@@ -11,9 +12,28 @@ from cat.models import Cat
 def news_detail(request, word):
 
     site = Main.objects.get(pk=1)
-    news = News.objects.filter(name=word).first()
+    newses = News.objects.all().order_by('-pk')
+    cats = Cat.objects.all()
+    subcats = SubCat.objects.all()
 
-    return render(request, 'front/news_detail.html', {'news': news, 'site': site})
+    shownews = News.objects.get(name=word)
+    # popular newses
+    popnewses = News.objects.order_by('-show')
+
+    # tags 
+    tagname = News.objects.get(name=word).tag
+
+    tags = tagname.split(',')
+
+    try:
+        mynews = News.objects.get(name=word)
+        mynews.show = mynews.show + 1
+        mynews.save()
+    
+    except:
+        print('Can\'t add the show')
+
+    return render(request, 'front/news_detail.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'shownews': shownews, 'popnewses': popnewses, 'tags': tags})
 
 
 def news_list(request):
@@ -59,6 +79,7 @@ def news_add(request):
         newstxtshort = request.POST.get('newstxtshort')
         newstxt = request.POST.get('newstxt')
         newscatid = request.POST.get('newscat')
+        tags = request.POST.get('tag')
 
         # forms validation
         if newstitle == '' or newstxtshort == '' or newstxt == '' or newscat == '':
@@ -82,7 +103,7 @@ def news_add(request):
                     ## add data to the database
                     data = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt,
                                 date=today, time=time, picname=filename, picurl=url, writer='-',
-                                catname=newscatname, catid=newscatid, ocatid=ocatid, show=0)
+                                catname=newscatname, catid=newscatid, ocatid=ocatid, show=0, tag=tags)
                     data.save()
 
                     # get the subcat. origin id/pk
@@ -172,6 +193,7 @@ def news_edit(request, pk):
         newstxtshort = request.POST.get('newstxtshort')
         newstxt = request.POST.get('newstxt')
         newscatid = request.POST.get('newscat')
+        tags = request.POST.get('tag')
 
         try:
             # save the file
@@ -198,6 +220,7 @@ def news_edit(request, pk):
                     b.picurl = url
                     b.catname = newscatname
                     b.catid = newscatid
+                    b.tag = tags
 
                     b.save()
 
@@ -228,6 +251,7 @@ def news_edit(request, pk):
             b.body_txt = newstxt
             b.catname = newscatname
             b.catid = newscatid
+            b.tag = tags
 
             b.save()
 

@@ -22,18 +22,32 @@ def home(request):
     # latest or last news
     lastnewses = News.objects.order_by('-pk')[:3]
 
-    return render(request, 'front/home.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses})
+    # popular news
+    popnewses = News.objects.order_by('-show')
+
+    popnewses2 = News.objects.order_by('-show')[:3]
+
+    return render(request, 'front/home.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})
 
 
 def about(request):
 
     site = Main.objects.get(pk=1)
+    newses = News.objects.all().order_by('-pk')
+    cats = Cat.objects.all()
+    subcats = SubCat.objects.all()
+    # latest or last news
+    lastnewses = News.objects.order_by('-pk')[:3]
 
-    return render(request, 'front/about.html', {'site': site})
+    # popular news
+    popnewses = News.objects.order_by('-show')
+
+    popnewses2 = News.objects.order_by('-show')[:3]
+
+    return render(request, 'front/about.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})
 
 
 def panel(request):
-
     # login check
     if not request.user.is_authenticated:
         return redirect('login')
@@ -133,3 +147,42 @@ def site_setting(request):
     site = Main.objects.get(pk=1)
 
     return render(request, 'back/settings.html', {'site': site})
+
+
+def about_setting(request):
+
+    # check login
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
+
+    if request.method == 'POST':
+        txt = request.POST.get('abouttxt')
+
+        if txt == '':
+            error = 'Please fill the about section!'
+            return render(request, 'back/error.html', {'error': error})
+
+        main = Main.objects.get(pk=1)
+        main.abouttxt = txt
+        main.save()
+
+    abouttxt = Main.objects.get(pk=1).abouttxt
+
+    return render(request, 'back/about_setting.html', {'abouttxt': abouttxt})
+
+
+def contact(request):
+    site = Main.objects.get(pk=1)
+    newses = News.objects.all().order_by('-pk')
+    cats = Cat.objects.all()
+    subcats = SubCat.objects.all()
+    # latest or last news
+    lastnewses = News.objects.order_by('-pk')[:3]
+
+    # popular news
+    popnewses = News.objects.order_by('-show')
+
+    popnewses2 = News.objects.order_by('-show')[:3]
+
+    return render(request, 'front/contact.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})

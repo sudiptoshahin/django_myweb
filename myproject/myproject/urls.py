@@ -16,6 +16,8 @@ urlpatterns = [
     path('', include('cat.urls')),
     # subcategory
     path('', include('subcat.urls')),
+    # contact form
+    path('', include('contactform.urls')),
 ]
 
 if settings.DEBUG:

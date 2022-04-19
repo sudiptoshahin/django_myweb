@@ -20,4 +20,10 @@ urlpatterns = [
 
     # site settings
     path('panel/setting/', views.site_setting, name='site_setting'),
+
+    # about settings
+    path('panel/about/setting/', views.about_setting, name='about_setting'),
+
+    # contact
+    path('contact/', views.contact, name='contact'),
 ]

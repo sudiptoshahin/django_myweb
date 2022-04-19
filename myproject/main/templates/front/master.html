@@ -69,15 +69,15 @@
 								About
 							</a>
 
-							<a href="#" class="left-topbar-item">
+							<a href="{% url 'contact' %}" class="left-topbar-item">
 								Contact
 							</a>
 
 							<a href="#" class="left-topbar-item">
-								Sing up
+								Sign up
 							</a>
 
-							<a href="#" class="left-topbar-item">
+							<a href="{% url 'login' %}" class="left-topbar-item">
 								Log in
 							</a>
 
@@ -124,8 +124,8 @@
 				<div class="main-nav">
 					<!-- Menu desktop -->
 					<nav class="menu-desktop">
-						<a class="logo-stick" href="index.html">
-							<img src="{% static 'front/images/icons/logo-01.png' %}" alt="LOGO">
+						<a class="logo-stick" href="{% url 'home' %}">
+							<img src="{{ site.picurl }}" alt="LOGO">
 						</a>
 
 						<ul class="main-menu justify-content-center">
@@ -308,59 +308,25 @@
 						</div>
 
 						<ul>
-							<li class="flex-wr-sb-s p-b-20">
-								<a href="#" class="size-w-4 wrap-pic-w hov1 trans-03">
-									<img src="{% static 'front/images/popular-post-01.jpg' %}" alt="IMG">
-								</a>
+							{% for popnews in popnewses2 %}
+								<li class="flex-wr-sb-s p-b-20">
+									<a href="{% url 'news_detail' word=popnews.name %}" class="size-w-4 wrap-pic-w hov1 trans-03">
+										<img src="{{ popnews.picurl }}" alt="IMG">
+									</a>
 
-								<div class="size-w-5">
-									<h6 class="p-b-5">
-										<a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
-											Donec metus orci, malesuada et lectus vitae
-										</a>
-									</h6>
+									<div class="size-w-5">
+										<h6 class="p-b-5">
+											<a href="{% url 'news_detail' word=popnews.name %}" class="f1-s-5 cl11 hov-cl10 trans-03">
+												{{ popnews.name }}
+											</a>
+										</h6>
 
-									<span class="f1-s-3 cl6">
-										Feb 17
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-wr-sb-s p-b-20">
-								<a href="#" class="size-w-4 wrap-pic-w hov1 trans-03">
-									<img src="{% static 'front/images/popular-post-02.jpg' %}" alt="IMG">
-								</a>
-
-								<div class="size-w-5">
-									<h6 class="p-b-5">
-										<a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
-											Lorem ipsum dolor sit amet, consectetur
-										</a>
-									</h6>
-
-									<span class="f1-s-3 cl6">
-										Feb 16
-									</span>
-								</div>
-							</li>
-
-							<li class="flex-wr-sb-s p-b-20">
-								<a href="#" class="size-w-4 wrap-pic-w hov1 trans-03">
-									<img src="{% static 'front/images/popular-post-03.jpg' %}" alt="IMG">
-								</a>
-
-								<div class="size-w-5">
-									<h6 class="p-b-5">
-										<a href="#" class="f1-s-5 cl11 hov-cl10 trans-03">
-											Suspendisse dictum enim quis imperdiet auctor
-										</a>
-									</h6>
-
-									<span class="f1-s-3 cl6">
-										Feb 15
-									</span>
-								</div>
-							</li>
+										<span class="f1-s-3 cl6">
+											{{ popnews.date }}
+										</span>
+									</div>
+								</li>
+							{% endfor %}
 						</ul>
 					</div>
 

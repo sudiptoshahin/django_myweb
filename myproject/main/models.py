@@ -8,6 +8,7 @@ class Main(models.Model):
 
     name = models.CharField(max_length=20)
     about = models.TextField(default='-')
+    abouttxt = models.TextField(default='-')
     fb = models.CharField(default='-', max_length=50)
     tw = models.CharField(default='-', max_length=50)
     yt = models.CharField(default='-', max_length=50)
