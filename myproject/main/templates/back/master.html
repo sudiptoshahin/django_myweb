@@ -309,7 +309,7 @@
                                     <a href="page_ready_user_profile.html" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
                                     <a href="page_ready_inbox.html" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
                                     <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-                                    <a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings" onclick="$('#modal-user-settings').modal('show');"><i class="gi gi-cogwheel"></i></a>
+                                    <a href="{% url 'change_pass' %}" class="enable-tooltip" data-placement="bottom" title="Settings"><i class="gi gi-cogwheel"></i></a>
                                     <a href="{% url 'logout' %}" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
                                 </div>
                             </div>
@@ -390,6 +390,11 @@
                                 <li>
                                     <a href="{% url 'contact_show' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Contact forms</span></a>
                                 </li>
+                                <li class="sidebar-header">
+                                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+                                    <span class="sidebar-header-title">Manager</span>
+                                    <a href="{% url 'manager_list' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Manager List</span></a>
+                                </li>
 
                                 <!-- news category starts here -->
                                 <li>
@@ -420,7 +425,6 @@
                                     </ul>
                                 </li>
                                 <!-- news category ends here -->
-
                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">News</span></a>
                                     <ul>
@@ -433,6 +437,10 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li>
+                                    <a href="{% url 'trending_add' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Trending</span></a>
+                                </li>
+                                
                             </ul>
                             <!-- END Sidebar Navigation -->
                         </div>

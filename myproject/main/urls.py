@@ -15,6 +15,9 @@ urlpatterns = [
     #login
     path('login/', views.my_login, name='login'),
 
+    # register
+    path('register/', views.my_register, name='register'),
+
     # logout
     path('logout/', views.my_logout, name='logout'),
 
@@ -26,4 +29,7 @@ urlpatterns = [
 
     # contact
     path('contact/', views.contact, name='contact'),
+
+    # change password
+    path('panel/change/password', views.change_pass, name='change_pass'),
 ]

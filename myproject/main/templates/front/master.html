@@ -45,17 +45,11 @@
 							</span>
 
 							<span class="dis-inline-block cl16 slide100-txt pos-relative size-w-0" data-in="fadeInDown" data-out="fadeOutDown">
-								<span class="dis-inline-block slide100-txt-item animated visible-false">
-									Interest rate angst trips up US equity bull market
-								</span>
-
-								<span class="dis-inline-block slide100-txt-item animated visible-false">
-									Designer fashion show kicks off Variety Week
-								</span>
-
-								<span class="dis-inline-block slide100-txt-item animated visible-false">
-									Microsoft quisque at ipsum vel orci eleifend ultrices
-								</span>
+								{% for trending in trendings %}
+									<span class="dis-inline-block slide100-txt-item animated visible-false">
+										{{ trending.txt }}
+									</span>
+								{% endfor %}
 							</span>
 						</div>
 					</div>
@@ -73,12 +67,8 @@
 								Contact
 							</a>
 
-							<a href="#" class="left-topbar-item">
-								Sign up
-							</a>
-
 							<a href="{% url 'login' %}" class="left-topbar-item">
-								Log in
+								Log in | Sign up
 							</a>
 
 							<a href="#" class="left-topbar-item"></a>

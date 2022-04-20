@@ -1,0 +1,73 @@
+
+{% extends 'back/master.html' %}
+{% load static %}
+
+{% block scriptblock %}
+    
+{% endblock %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Change Password<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Password</li>
+        <li><a href="{% url 'trending_add' %}">Change</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2><strong>Change</strong> Password</h2>
+    </div>
+
+
+    <div class="table-responsive">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Basic Form Elements Block -->
+                <div class="block">
+                    <!-- Basic Form Elements Content -->
+                    <form action="{% url 'change_pass' %}" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="oldpass" name="oldpass" placeholder="Old password">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="newpass" name="newpass" placeholder="New password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <!-- END Basic Form Elements Content -->
+                </div>
+            
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+{% endblock %}

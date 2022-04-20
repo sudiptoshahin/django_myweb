@@ -1,0 +1,81 @@
+
+{% extends 'back/master.html' %}
+{% load static %}
+
+{% block scriptblock %}
+    
+{% endblock %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Edit Trending<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Trending</li>
+        <li><a href="{% url 'trending_add' %}">Edit</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2><strong>Trending</strong> Edit</h2>
+    </div>
+
+
+    <div class="table-responsive">
+
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Basic Form Elements Block -->
+                <div class="block">
+                    <!-- Basic Form Elements Title -->
+                    <div class="block-title">
+
+                        <h2><strong>Edit</strong> Trending</h2>
+                    </div>
+                    <!-- END Form Elements Title -->
+
+                    <!-- Basic Form Elements Content -->
+                    <form action="{% url 'trending_edit' pk=trending.pk %}" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" value="{{ trending.txt }}" id="txt" name="txt" placeholder="Trending">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Submit</button>
+                                </div>
+                            </div>
+                        </div>                     
+                    </form>
+                    <!-- END Basic Form Elements Content -->
+                </div>
+                <!-- END Basic Form Elements Block -->
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    
+    
+{% endblock %}

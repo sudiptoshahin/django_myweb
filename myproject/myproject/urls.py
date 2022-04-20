@@ -18,6 +18,11 @@ urlpatterns = [
     path('', include('subcat.urls')),
     # contact form
     path('', include('contactform.urls')),
+    # trending
+    path('', include('trending.urls')),
+    # manager
+    path('', include('manager.urls')),
+
 ]
 
 if settings.DEBUG:

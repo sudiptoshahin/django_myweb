@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Main
-from django.contrib.auth.models import User
 from news.models import News
 from cat.models import Cat
 from subcat.models import SubCat
 from .models import Main
 from django.core.files.storage import FileSystemStorage
-
+from trending.models import Trending
+from random import randint
 # authenticating
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from manager.models import Manager
 
 # Create your views here.
 
@@ -24,10 +26,18 @@ def home(request):
 
     # popular news
     popnewses = News.objects.order_by('-show')
-
     popnewses2 = News.objects.order_by('-show')[:3]
 
-    return render(request, 'front/home.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})
+    trendings = Trending.objects.order_by('-pk')[:5]
+
+    random_obj = Trending.objects.all()[randint(0, len(trendings) - 1)]
+
+    return render(request,
+                 'front/home.html',
+                  {'site': site, 'newses': newses, 'cats': cats,
+                    'subcats': subcats, 'lastnewses': lastnewses,
+                    'popnewses': popnewses, 'popnewses2': popnewses2, 
+                    'trendings': trendings})
 
 
 def about(request):
@@ -41,10 +51,11 @@ def about(request):
 
     # popular news
     popnewses = News.objects.order_by('-show')
-
     popnewses2 = News.objects.order_by('-show')[:3]
 
-    return render(request, 'front/about.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})
+    trendings = Trending.objects.order_by('-pk')[:5]
+
+    return render(request, 'front/about.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2, 'trendings': trendings})
 
 
 def panel(request):
@@ -182,7 +193,107 @@ def contact(request):
 
     # popular news
     popnewses = News.objects.order_by('-show')
-
     popnewses2 = News.objects.order_by('-show')[:3]
 
-    return render(request, 'front/contact.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2})
+    trendings = Trending.objects.order_by('-pk')[:5]
+
+    return render(request, 'front/contact.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'lastnewses': lastnewses, 'popnewses': popnewses, 'popnewses2': popnewses2, 'trendings': trendings})
+
+
+def change_pass(request):
+
+    # login check
+    if not request.user.is_authenticated:
+        redirect('login')
+    # login check end
+
+    if request.method == 'POST':
+        old_pass = request.POST.get('oldpass')
+        new_pass = request.POST.get('newpass')
+        
+        if old_pass == '' or new_pass == '':
+            error = 'All fields are required!'
+            return render(request, 'back/error.html', {'error': error})
+
+        user = authenticate(username=request.user, password=old_pass)
+
+        if user != None:
+            if len(new_pass) < 5:
+                error = 'You password atleast 5 character!'
+                return render(request, 'back/error.html', {'error': error})
+
+            count1 = 0
+            count2 = 0
+            count3 = 0
+            count4 = 0
+            for i in new_pass:
+                if i > '0' and i < '9':
+                    count1 = 1
+                if i > 'a' and i < 'z':
+                    count2 = 1
+                if i > 'A' and i < 'Z':
+                    count3 = 1
+                if i > '!' and i < '(':
+                    count4 = 1
+            
+            if count1 == 1 and count2 == 1 and count3 == 1 and count4 == 1:
+                user = User.objects.get(username=request.user)
+                user.set_password(new_pass)
+                user.save()
+                return redirect('logout')
+
+        else:
+            error = 'Your password is not correct'
+            return render(request, 'back/error.html', {'error': error})
+
+
+    return render(request, 'back/changepass.html')
+
+
+def my_register(request):
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        uname = request.POST.get('username')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+
+        if name == '':
+            msg = 'Please input your name'
+            return render(request, 'front/msgbox.html')
+
+        # password validations
+        if password1 != password2:
+            msg = 'Password didn\'t match!'
+            return render(request, 'front/msgbox.html', {'msg': msg})
+
+        count1 = 0
+        count2 = 0
+        count3 = 0
+        count4 = 0
+
+        for ch in password1:
+            if ch > '0' and ch < '9':
+                count1 = 1
+            if ch > 'A' and ch < 'Z':
+                count2 = 1
+            if ch > 'a' and ch < 'z':
+                count3 = 1
+            if ch > '!' and ch < '(':
+                count4 = 1
+        if count1 == 0 or count2 == 0 or count3 == 0 or count4 == 0:
+            msg = "Your password is not strong enough!"
+            return render(request, 'front/msgbox.html', {'msg': msg})
+        if len(password1) < 5:
+            msg = 'Your password must be 5 character long!'
+            return render(request, 'front/msgbox.html', {'msg': msg})
+
+        # username validations/ userrname & email exists or not
+        if len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0:
+            user = User.objects.create_user(username=uname, email=email, password=password1)
+            b = Manager(name=name, utxt=uname, email=email)
+            b.save()
+
+
+    return render(request, 'front/login.html')
