@@ -1,0 +1,102 @@
+
+{% extends 'back/master.html' %}
+{% load static %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Group Permissions<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Groups</li>
+        <li><a href="{% url 'manager_group' %}">Permissions</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+
+                    <h2><strong>Permissions</strong> Group</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form action="{% url 'groups_permissions_add' name=group_name %}" method="post" class="form-horizontal form-bordered">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-select select-chosen" id="pname" name="pname" aria-label="Default select example" name="example-chosen" style="width: 100%;">  
+                                    <option selected>Choose Permission..</option>
+                                    {% for permission in all_permissions %}
+                                        <option value="{{ permission.name }}">{{ permission.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+
+    </div>
+
+    <div class="block-title">
+        <h2><strong>Group</strong> Permissions List</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for perm in permissions %}
+                    <tr>
+                        <td class="text-center">{{ perm.pk }}</td>
+                        <td>{{ perm.name }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="{% url 'groups_permissions_del' gname=group_name name=perm.name %}" data-toggle="tooltip" title="Remove" class="btn btn-xs btn-danger"><i class="fa fa-times">Remove</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script>$(function(){ TablesDatatables.init(); });</script>
+{% endblock %}

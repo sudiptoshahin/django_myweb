@@ -1,5 +1,6 @@
 
 {% load static %}
+{% load extra_auth %}
 
 {% if user.is_authenticated %}
 
@@ -304,7 +305,7 @@
                                         <img src="{% static 'back/img/placeholders/avatars/avatar2.jpg' %}" alt="avatar">
                                     </a>
                                 </div>
-                                <div class="sidebar-user-name">John Doe</div>
+                                <div class="sidebar-user-name">{{ request.user }}</div>
                                 <div class="sidebar-user-links">
                                     <a href="page_ready_user_profile.html" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
                                     <a href="page_ready_inbox.html" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
@@ -371,60 +372,71 @@
                             <!-- Sidebar Navigation -->
                             <ul class="sidebar-nav">
                                 <li>
-                                    <a href="index.html" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+                                    <a href="{% url 'panel' %}" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
                                 </li>
+                                {% if request.user|has_group:'masteruser' %}
+                                    <li class="sidebar-header">
+                                        <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+                                        <span class="sidebar-header-title">Settings</span>
+                                    </li>
 
-                                <li class="sidebar-header">
-                                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
-                                    <span class="sidebar-header-title">Settings</span>
-                                </li>
+                                    <li>
+                                        <a href="{% url 'site_setting' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Site Settings</span></a>
+                                    </li>
 
-                                <li>
-                                    <a href="{% url 'site_setting' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Site Settings</span></a>
-                                </li>
+                                    <li>
+                                        <a href="{% url 'about_setting' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">About Settings</span></a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{% url 'contact_show' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Contact forms</span></a>
+                                    </li>
 
-                                <li>
-                                    <a href="{% url 'about_setting' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">About Settings</span></a>
-                                </li>
                                 
-                                <li>
-                                    <a href="{% url 'contact_show' %}"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Contact forms</span></a>
-                                </li>
-                                <li class="sidebar-header">
-                                    <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
-                                    <span class="sidebar-header-title">Manager</span>
-                                    <a href="{% url 'manager_list' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Manager List</span></a>
-                                </li>
+                                    <li class="sidebar-header">
+                                        <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+                                        <span class="sidebar-header-title">Permissions</span>
+                                        <a href="{% url 'manager_group' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Groups</span></a>
+                                        <a href="{% url 'manager_permission' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Permissions</span></a>
+                                    </li>
+                                
 
-                                <!-- news category starts here -->
-                                <li>
-                                    <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Category</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="{% url 'cat_add' %}">Add New</a>
-                                        </li>
+                                    <li class="sidebar-header">
+                                        <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+                                        <span class="sidebar-header-title">Manager</span>
+                                        <a href="{% url 'manager_list' %}"><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini">Manager List</span></a>
+                                    </li>
 
-                                        <li>
-                                            <a href="{% url 'cat_list' %}">Category List</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- news category ends here -->
+                                    <!-- news category starts here -->
+                                    <li>
+                                        <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Category</span></a>
+                                        <ul>
+                                            <li>
+                                                <a href="{% url 'cat_add' %}">Add New</a>
+                                            </li>
 
-                                <!-- news subcategory starts here -->
-                                <li>
-                                    <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Subcategory</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="{% url 'subcat_add' %}">Add Subcategory</a>
-                                        </li>
+                                            <li>
+                                                <a href="{% url 'cat_list' %}">Category List</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- news category ends here -->
 
-                                        <li>
-                                            <a href="{% url 'subcat_list' %}">Subcategory List</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <!-- news category ends here -->
+                                    <!-- news subcategory starts here -->
+                                    <li>
+                                        <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Subcategory</span></a>
+                                        <ul>
+                                            <li>
+                                                <a href="{% url 'subcat_add' %}">Add Subcategory</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="{% url 'subcat_list' %}">Subcategory List</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- news category ends here -->
+                                {% endif %}
                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">News</span></a>
                                     <ul>

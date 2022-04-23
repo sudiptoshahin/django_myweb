@@ -1,0 +1,102 @@
+
+{% extends 'back/master.html' %}
+{% load static %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Users Groups<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Users</li>
+        <li><a href="{% url 'manager_group' %}">Groups</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+
+                    <h2><strong>Add User</strong> to Group</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form action="{% url 'add_users_to_groups' pk=pk %}" method="post" class="form-horizontal form-bordered">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-select select-chosen" id="gname" name="gname" aria-label="Default select example" name="example-chosen" style="width: 100%;">  
+                                    <option selected>Choose a Group..</option>
+                                    {% for group in groups %}
+                                        <option value="{{ group.name }}"> {{ group.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+
+    </div>
+
+    <div class="block-title">
+        <h2><strong>Group</strong> list</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for user_group in user_groups %}
+                    <tr>
+                        <!-- <td class="text-center">{{ user_group.pk }}</td> -->
+                        <td class="text-center">{{ user_group }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="#" data-toggle="tooltip" title="Group" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
+                                <a href="{% url 'del_users_from_groups' pk=pk name=user_group %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times">Remove</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script>$(function(){ TablesDatatables.init(); });</script>
+{% endblock %}

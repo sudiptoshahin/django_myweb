@@ -1,0 +1,102 @@
+
+{% extends 'back/master.html' %}
+{% load static %}
+
+{% block mainblock %}
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Users Permission<br><small>You can add, edit and delete your news data!</small>
+        </h1>
+    </div>
+    <ul class="breadcrumb breadcrumb-top">
+        <li>Users</li>
+        <li><a href="{% url 'manager_group' %}">Permission</a></li>
+    </ul>
+</div>
+
+<!-- Datatables Content -->
+<div class="block full">
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Basic Form Elements Block -->
+            <div class="block">
+                <!-- Basic Form Elements Title -->
+                <div class="block-title">
+
+                    <h2><strong>Add User</strong> Permission</h2>
+                </div>
+                <!-- END Form Elements Title -->
+
+                <!-- Basic Form Elements Content -->
+                <form action="{% url 'users_permission_add' pk=pk %}" method="post" class="form-horizontal form-bordered">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-select select-chosen" id="pname" name="pname" aria-label="Default select example" name="example-chosen" style="width: 100%;">  
+                                    <option selected>Choose a Permission..</option>
+                                    {% for perm in permissions %}
+                                        <option value="{{ perm.name }}"> {{ perm.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END Basic Form Elements Content -->
+            </div>
+            <!-- END Basic Form Elements Block -->
+        </div>
+
+    </div>
+
+    <div class="block-title">
+        <h2><strong>Permission</strong> list</h2>
+    </div>
+
+    <div class="table-responsive">
+        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for user_permission in user_permissions %}
+                    <tr>
+                        <!-- <td class="text-center">{{ user_group.pk }}</td> -->
+                        <td class="text-center">{{ user_permission }}</td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="#" data-toggle="tooltip" title="Group" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
+                                <a href="{% url 'users_permission_del' pk=pk name=user_permission %}" data-toggle="tooltip" title="Remove" class="btn btn-xs btn-danger"><i class="fa fa-times">Remove</i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+{% endblock %}
+
+{% block footerblock %}
+    <!-- Load and execute javascript code used only in this page -->
+    <script src="{% static 'back/js/pages/tablesDatatables.js' %}"></script>
+    <script>$(function(){ TablesDatatables.init(); });</script>
+{% endblock %}

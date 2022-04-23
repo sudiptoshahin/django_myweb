@@ -46,8 +46,9 @@
                         
                         <td class="text-center">
                             <div class="btn-group">
-                                <a href="#" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
+                                <a href="{% url 'users_groups' pk=manager.pk %}" data-toggle="tooltip" title="Group" class="btn btn-xs btn-default"><i class="fa fa-pencil">Group</i></a>
                                 <a href="{% url 'manager_del' pk=manager.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times">Delete</i></a>
+                                <a href="{% url 'users_permission' pk=manager.pk %}" data-toggle="tooltip" title="Permission" class="btn btn-xs btn-default"><i class="fa fa-pencil">Permission</i></a>
                             </div>
                         </td>
                     </tr>
