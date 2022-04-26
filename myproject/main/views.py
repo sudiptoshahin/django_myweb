@@ -18,15 +18,15 @@ from manager.models import Manager
 def home(request):
 
     site = Main.objects.get(pk=1)
-    newses = News.objects.all().order_by('-pk')
+    newses = News.objects.filter(act=1).order_by('-pk')
     cats = Cat.objects.all()
     subcats = SubCat.objects.all()
     # latest or last news
-    lastnewses = News.objects.order_by('-pk')[:3]
+    lastnewses = News.objects.filter(act=1).order_by('-pk')[:3]
 
     # popular news
-    popnewses = News.objects.order_by('-show')
-    popnewses2 = News.objects.order_by('-show')[:3]
+    popnewses = News.objects.filter(act=1).order_by('-show')
+    popnewses2 = News.objects.filter(act=1).order_by('-show')[:3]
 
     trendings = Trending.objects.order_by('-pk')[:5]
 

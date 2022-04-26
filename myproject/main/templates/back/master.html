@@ -371,9 +371,12 @@
 
                             <!-- Sidebar Navigation -->
                             <ul class="sidebar-nav">
-                                <li>
-                                    <a href="{% url 'panel' %}" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
-                                </li>
+
+                                {% if perms.main.master_user %}
+                                    <li>
+                                        <a href="{% url 'panel' %}" class=" active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dashboard</span></a>
+                                    </li>
+                                {% endif %}
                                 {% if request.user|has_group:'masteruser' %}
                                     <li class="sidebar-header">
                                         <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a></span>

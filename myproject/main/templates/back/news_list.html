@@ -32,6 +32,7 @@
                     <th>Date & Time</th>
                     <th>Category</th>
                     <th>Writter</th>
+                    <th>Status</th>
                     <th>Views</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -46,11 +47,19 @@
                         <td>{{ news.date }} | {{ news.time }}</td>
                         <td>{{ news.catname }}</td>
                         <td>{{ news.writer }}</td>
-                        <td>-</td>
+                        {% if news.act == 0 %}
+                            <td> Pending.. </td>
+                        {% elif news.act == 1 %}
+                            <td> Confirmed </td>
+                        {% endif %}
+                        <td>{{ news.show }}</td>
                         <td class="text-center">
                             <div class="btn-group">
                                 <a href="{% url 'news_edit' pk=news.pk %}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil">Edit</i></a>
                                 <a href="{% url 'news_delete' pk=news.pk %}" data-toggle="tooltip" title="Delete" class="btn btn-xs btn-danger"><i class="fa fa-times">Delete</i></a>
+                                {% if perms.main.master_user %}
+                                    <a href="{% url 'news_publish' pk=news.pk %}" data-toggle="tooltip" title="Edit" class="btn btn-xs btn-default"><i class="fa fa-pencil">Publish</i></a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

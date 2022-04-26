@@ -7,6 +7,7 @@ import datetime
 from subcat.models import SubCat
 from cat.models import Cat
 from trending.models import Trending
+from django.contrib.auth.models import Group, User, Permission
 
 # Create your views here.
 
@@ -44,9 +45,17 @@ def news_list(request):
         return redirect('login')
     # login check end
 
-    newslist = News.objects.all()
+    perm = 0
+    perms = Permission.objects.filter(user=request.user)
+    for i in perms:
+        if i.codename == 'master_user': perm = 1
 
-    return render(request, 'back/news_list.html', {'newslist': newslist})
+    if perm == 0:
+        newslist = News.objects.filter(writer=request.user)
+    elif perm == 1:
+        newslist = News.objects.all()
+
+    return render(request, 'back/news_list.html', {'newslist': newslist, 'perm': perm})
 
 
 def news_add(request):
@@ -103,7 +112,7 @@ def news_add(request):
                     ocatid = SubCat.objects.get(pk=newscatid).catid
                     ## add data to the database
                     data = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt,
-                                date=today, time=time, picname=filename, picurl=url, writer='-',
+                                date=today, time=time, picname=filename, picurl=url, writer=request.user,
                                 catname=newscatname, catid=newscatid, ocatid=ocatid, show=0, tag=tags)
                     data.save()
 
@@ -149,6 +158,16 @@ def news_del(request, pk):
     will shows error if it get a pk which is not exists. '''
     ''' We need also delete the image of the news so we need
     to use get() instead of filter() '''
+
+    perm = 0
+    for i in request.user.groups.all():
+        if i.name == 'masteruser': perm = 1
+    
+    if perm == 0:
+        writer = News.objects.get(pk=pk).writer
+        if str(writer) != str(request.user):
+            error = 'Access Denied!'
+            return render(request, 'back/error.html', {'error': error})
     
     try:
         news = News.objects.get(pk=pk)
@@ -222,6 +241,7 @@ def news_edit(request, pk):
                     b.catname = newscatname
                     b.catid = newscatid
                     b.tag = tags
+                    b.act = 0
 
                     b.save()
 
@@ -259,3 +279,18 @@ def news_edit(request, pk):
             return redirect('news_list')
 
     return render(request, 'back/news_edit.html', {'pk': pk, 'news': news, 'cats': cats})
+
+
+def news_publish(request, pk):
+
+    # login check
+    if not request.user.is_authenticated:
+        return redirect('login')
+    # login check end
+
+    news = News.objects.get(pk=pk)
+    news.act = 1
+    news.save()
+
+
+    return redirect('news_list')

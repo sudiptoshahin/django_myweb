@@ -16,5 +16,7 @@ urlpatterns = [
 
     re_path(r'^panel/news/edit/(?P<pk>\d+)/$', views.news_edit, name='news_edit'),
 
+    re_path(r'^panel/news/publish/(?P<pk>\d+)/$', views.news_publish, name='news_publish'),
+
     
 ]
