@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'contactform.apps.ContactformConfig',
     'trending.apps.TrendingConfig',
     'manager.apps.ManagerConfig',
+    'newsletter.apps.NewsletterConfig'
 ]
 
 MIDDLEWARE = [

@@ -8,6 +8,7 @@ from subcat.models import SubCat
 from cat.models import Cat
 from trending.models import Trending
 from django.contrib.auth.models import Group, User, Permission
+import random
 
 # Create your views here.
 
@@ -29,6 +30,32 @@ def news_detail(request, word):
 
     try:
         mynews = News.objects.get(name=word)
+        mynews.show = mynews.show + 1
+        mynews.save()
+    
+    except:
+        print('Can\'t add the show')
+
+    return render(request, 'front/news_detail.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'shownews': shownews, 'popnewses': popnewses, 'tags': tags, 'trendings': trendings})
+
+def news_detail_short(request, pk):
+
+    site = Main.objects.get(pk=1)
+    newses = News.objects.all().order_by('-pk')
+    cats = Cat.objects.all()
+    subcats = SubCat.objects.all()
+
+    shownews = News.objects.get(rand=pk)
+    # popular newses
+    popnewses = News.objects.order_by('-show')
+    # tags 
+    tagname = News.objects.get(rand=pk).tag
+    tags = tagname.split(',')
+
+    trendings = Trending.objects.order_by('-pk')
+
+    try:
+        mynews = News.objects.get(rand=pk)
         mynews.show = mynews.show + 1
         mynews.save()
     
@@ -81,6 +108,17 @@ def news_add(request):
     today = str(year) + '/' + str(month) + '/' + str(day)
     time = str(hour) + ':' + str(minute)
 
+    date = str(year)+str(month)+str(day)
+    randint = str(random.randint(1000, 9999))
+    rand = date+randint
+    rand = int(rand)
+    print(rand)
+
+    while len(News.objects.filter(rand=rand)) != 0:
+        randint = str(random.randint(1000, 9999))
+        rand = date+randint
+        rand = int(rand)
+
     cats = SubCat.objects.all()
 
     if request.method == 'POST':
@@ -113,7 +151,8 @@ def news_add(request):
                     ## add data to the database
                     data = News(name=newstitle, short_txt=newstxtshort, body_txt=newstxt,
                                 date=today, time=time, picname=filename, picurl=url, writer=request.user,
-                                catname=newscatname, catid=newscatid, ocatid=ocatid, show=0, tag=tags)
+                                catname=newscatname, catid=newscatid, ocatid=ocatid, show=0, tag=tags,
+                                rand=rand)
                     data.save()
 
                     # get the subcat. origin id/pk

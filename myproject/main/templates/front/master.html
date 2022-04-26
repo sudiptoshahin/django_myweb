@@ -286,6 +286,12 @@
 								<a href="{{ site.yt }}" class="fs-18 cl11 hov-cl10 trans-03 m-r-8">
 									<span class="fab fa-youtube"></span>
 								</a>
+								<br><br>
+								<form action="{% url 'news_letter' %}" method="POST">
+									{% csrf_token %}
+									<input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" name="txt" placeholder="Input your phone or email">
+									<button class="size-a-20 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20 btn btn-success">Send</button>
+								</form>
 							</div>
 						</div>
 					</div>

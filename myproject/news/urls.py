@@ -7,6 +7,8 @@ urlpatterns = [
 
     re_path(r'^news/(?P<word>.*)/$', views.news_detail, name='news_detail'),
 
+    re_path(r'^urls/(?P<pk>\d+)/$', views.news_detail_short, name='news_detail_short'),
+
     path('panel/news/list/', views.news_list, name='news_list'),
 
     path('panel/news/add/', views.news_add, name='news_add'),

@@ -11,6 +11,8 @@ from random import randint
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group, Permission
 from manager.models import Manager
+import random
+import string
 
 # Create your views here.
 
@@ -72,10 +74,22 @@ def panel(request):
     if perm == 0:
         error = 'Access Denied!'
         return render(request, 'back/error.html', {'error': error})
-    
 
+    # random strings
+    '''
+    test = ['!', '@', '#', '$', '%']
+    rand = ''
+    for i in range(4):
+        rand = rand + random.choice(string.ascii_letters)
+        rand += random.choice(test)
+        rand += str(random.randint(0, 9))
+    '''
 
-    return render(request, 'back/home.html')
+    # random query
+    count = News.objects.count()
+    rand = News.objects.all()[random.randint(0, count-1)]
+
+    return render(request, 'back/home.html', {'rand': rand})
 
 
 def my_login(request):

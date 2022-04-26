@@ -41,7 +41,7 @@
 
                 {% for news in newslist %}
                     <tr>
-                        <td class="text-center">{{ news.pk }}</td>
+                        <td class="text-center">{{ news.rand }}</td>
                         <td class="text-center"><img src="{{ news.picurl }}" style="display: inline-block;width: 50px; height: 50px;" alt="avatar" class="img-circle"></td>
                         <td>{{ news.name }}</td>
                         <td>{{ news.date }} | {{ news.time }}</td>

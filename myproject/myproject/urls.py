@@ -22,6 +22,8 @@ urlpatterns = [
     path('', include('trending.urls')),
     # manager
     path('', include('manager.urls')),
+    # newsletter
+    path('', include('newsletter.urls')),
 
 ]
 

@@ -439,6 +439,21 @@
                                         </ul>
                                     </li>
                                     <!-- news category ends here -->
+
+                                    <!-- newsletter starts here -->
+                                    <li>
+                                        <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Newsletter</span></a>
+                                        <ul>
+                                            <li>
+                                                <a href="{% url 'news_letter_emails' %}">Emails</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="{% url 'news_letter_phones' %}">Phone numbers</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <!-- newsletter ends here -->
                                 {% endif %}
                                 <li>
                                     <a href="#" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i class="gi gi-show_big_thumbnails sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">News</span></a>
