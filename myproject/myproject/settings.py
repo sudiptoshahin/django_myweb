@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'contactform.apps.ContactformConfig',
     'trending.apps.TrendingConfig',
     'manager.apps.ManagerConfig',
-    'newsletter.apps.NewsletterConfig'
+    'newsletter.apps.NewsletterConfig',
+    'comment.apps.CommentConfig',
+
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

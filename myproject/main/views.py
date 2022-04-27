@@ -89,6 +89,8 @@ def panel(request):
     count = News.objects.count()
     rand = News.objects.all()[random.randint(0, count-1)]
 
+    rand = 1234335454
+
     return render(request, 'back/home.html', {'rand': rand})
 
 

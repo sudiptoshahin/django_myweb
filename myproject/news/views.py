@@ -9,6 +9,7 @@ from cat.models import Cat
 from trending.models import Trending
 from django.contrib.auth.models import Group, User, Permission
 import random
+from comment.models import Comment
 
 # Create your views here.
 
@@ -36,7 +37,11 @@ def news_detail(request, word):
     except:
         print('Can\'t add the show')
 
-    return render(request, 'front/news_detail.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'shownews': shownews, 'popnewses': popnewses, 'tags': tags, 'trendings': trendings})
+    code = News.objects.get(name=word).pk
+    news_comments = Comment.objects.filter(news_id=code, status=1).order_by('-pk')
+    count_cm = len(news_comments)
+
+    return render(request, 'front/news_detail.html', {'site': site, 'newses': newses, 'cats': cats, 'subcats': subcats, 'shownews': shownews, 'popnewses': popnewses, 'tags': tags, 'trendings': trendings, 'code': code, 'news_comments': news_comments, 'count_cm': count_cm})
 
 def news_detail_short(request, pk):
 
@@ -243,6 +248,16 @@ def news_edit(request, pk):
     if len(News.objects.filter(pk=pk)) == 0:
         error = 'News not found!'
         return redirect(request, 'back/error.html', {'error': error})
+
+    perm = 0
+    for i in request.user.groups.all():
+        if i.name == 'masteruser': perm = 1
+
+    if perm == 0:
+        a = News.objects.get(pk=pk).writer
+        if str(a) != str(request.user):
+            error = 'Access Denied'
+            return render(request, 'back/error.html', {'error': error})
 
     news = News.objects.get(pk=pk)
     cats = SubCat.objects.all()

@@ -24,6 +24,8 @@ urlpatterns = [
     path('', include('manager.urls')),
     # newsletter
     path('', include('newsletter.urls')),
+    # comment
+    path('', include('comment.urls')),
 
 ]
 

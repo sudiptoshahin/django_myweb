@@ -1,6 +1,8 @@
 {% extends 'back/master.html' %} 
-{% load static %} 
+{% load static %}
 {% block mainblock %}
+{% load humanize %}
+
 <!-- Mini Top Stats Row -->
 <div class="row">
   <div class="col-sm-6 col-lg-3">
@@ -72,7 +74,7 @@
     <!-- END Widget -->
   </div>
 
-  {{rand}}
+  {{rand|intword}}
 
 </div>
 <!-- END Mini Top Stats Row -->
