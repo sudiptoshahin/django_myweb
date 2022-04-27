@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'newsletter.apps.NewsletterConfig',
     'comment.apps.CommentConfig',
+    'blocklist.apps.BlocklistConfig',
 
     'django.contrib.humanize',
 ]

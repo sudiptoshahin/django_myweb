@@ -26,6 +26,8 @@ urlpatterns = [
     path('', include('newsletter.urls')),
     # comment
     path('', include('comment.urls')),
+    # blocklist
+    path('', include('blocklist.urls')),
 
 ]
 

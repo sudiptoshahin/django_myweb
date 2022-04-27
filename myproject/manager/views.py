@@ -21,7 +21,7 @@ def manager_list(request):
         return redirect('login')
     # login check end
 
-    managers = Manager.objects.all()
+    managers = Manager.objects.all().exclude(utxt='admin')
 
     return render(request, 'back/manager_list.html', {'managers': managers})
 

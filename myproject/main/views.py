@@ -14,6 +14,10 @@ from manager.models import Manager
 import random
 import string
 
+# ip & locations
+from ipware import get_client_ip
+from ip2geotools.databases.noncommercial import DbIpCity
+
 # Create your views here.
 
 
@@ -90,6 +94,7 @@ def panel(request):
     rand = News.objects.all()[random.randint(0, count-1)]
 
     rand = 1234335454
+
 
     return render(request, 'back/home.html', {'rand': rand})
 
@@ -316,10 +321,21 @@ def my_register(request):
             msg = 'Your password must be 5 character long!'
             return render(request, 'front/msgbox.html', {'msg': msg})
 
+        ip, is_routable = get_client_ip(request)
+
+        if ip is None:
+            ip = '0.0.0.0'
+
+        try:
+            response = DbIpCity(ip, api_key='free')
+            country = response.country +' | '+ response.city
+        except:
+            country = 'Unknown'
+
         # username validations/ userrname & email exists or not
         if len(User.objects.filter(username=uname)) == 0 and len(User.objects.filter(email=email)) == 0:
             user = User.objects.create_user(username=uname, email=email, password=password1)
-            b = Manager(name=name, utxt=uname, email=email)
+            b = Manager(name=name, utxt=uname, email=email, ip=ip, country=country)
             b.save()
 
 
